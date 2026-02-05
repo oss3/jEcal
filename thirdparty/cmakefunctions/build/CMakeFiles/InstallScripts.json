@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Volumes/SIV/Dev/code/ecal/thirdparty/cmakefunctions/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
