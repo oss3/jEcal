@@ -29,7 +29,12 @@
 #endif
 
 #include <array>
+#include <cerrno>
+#include <cstring>
 #include <iostream>
+#if defined(__APPLE__)
+#include <sys/socket.h>
+#endif
 
 namespace eCAL
 {
@@ -131,6 +136,19 @@ namespace eCAL
         }
       }
 
+      // set reuse-port option (macOS requires this for multicast port sharing)
+#if defined(__APPLE__) && defined(SO_REUSEPORT)
+      {
+        int reuse_port = 1;
+        if (::setsockopt(m_socket->native_handle(), SOL_SOCKET, SO_REUSEPORT,
+                         &reuse_port, sizeof(reuse_port)) != 0)
+        {
+          std::cerr << "CSampleReceiverAsio: Unable to set reuse-port option: "
+                    << std::strerror(errno) << '\n';
+        }
+      }
+#endif
+
       // set loopback option
       {
         const asio::ip::multicast::enable_loopback loopback(attr_.loopback);
@@ -186,6 +204,11 @@ namespace eCAL
           m_socket->set_option(asio::ip::multicast::join_group(asio::ip::make_address(ipaddr_)), ec); // NOLINT(*-unused-return-value)
           if (ec)
           {
+            if (ec == asio::error::address_in_use)
+            {
+              std::cerr << "CUDPReceiverAsio: Multicast group already joined: " << ipaddr_ << '\n';
+              return(true);
+            }
             std::cerr << "CUDPReceiverAsio: Unable to join multicast group: " << ec.message() << '\n';
             return(false);
           }
