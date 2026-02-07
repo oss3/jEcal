@@ -257,6 +257,7 @@ namespace YAML
     node["send_buffer"]         = config_.send_buffer;
     node["receive_buffer"]      = config_.receive_buffer;
     node["join_all_interfaces"] = config_.join_all_interfaces;
+    node["multicast_interface"] = config_.multicast_interface;
     node["npcap_enabled"]       = config_.npcap_enabled;
     node["network"]             = config_.network;
     node["local"]               = config_.local;
@@ -275,6 +276,7 @@ namespace YAML
     AssignValue<unsigned int>(config_.send_buffer, node_, "send_buffer");
     AssignValue<unsigned int>(config_.receive_buffer, node_, "receive_buffer");
     AssignValue<bool>(config_.join_all_interfaces, node_, "join_all_interfaces");
+    AssignValue<std::string>(config_.multicast_interface, node_, "multicast_interface");
     AssignValue<bool>(config_.npcap_enabled, node_, "npcap_enabled");
 
     AssignValue<eCAL::TransportLayer::UDP::MulticastConfiguration>(config_.network, node_, "network");

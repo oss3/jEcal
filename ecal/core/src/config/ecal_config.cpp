@@ -52,7 +52,8 @@ namespace eCAL
     int                GetUdpMulticastSndBufSizeBytes       () { return GetConfiguration().transport_layer.udp.send_buffer; }
     int                GetUdpMulticastRcvBufSizeBytes       () { return GetConfiguration().transport_layer.udp.receive_buffer; }
     bool               IsUdpMulticastJoinAllIfEnabled       () { return GetConfiguration().transport_layer.udp.join_all_interfaces; }
-                       
+    const std::string& GetUdpMulticastInterface             () { return GetConfiguration().transport_layer.udp.multicast_interface; }
+
     bool               IsUdpMulticastRecEnabled             () { return GetConfiguration().subscriber.layer.udp.enable; }
     bool               IsShmRecEnabled                      () { return GetConfiguration().subscriber.layer.shm.enable; }
     bool               IsTcpRecEnabled                      () { return GetConfiguration().subscriber.layer.tcp.enable; }

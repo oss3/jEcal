@@ -224,6 +224,9 @@ namespace eCAL
       ss << R"(    # Enabling ensures that eCAL processes receive data when they are started before the)"                           << "\n";
       ss << R"(    # network devices are up and running.)"                                                                          << "\n";
       ss << R"(    join_all_interfaces: )"                           << config_.transport_layer.udp.join_all_interfaces             << "\n";
+      ss << R"(    # Specific network interface address for multicast group joins (e.g. "10.0.0.1").)"                              << "\n";
+      ss << R"(    # When empty, INADDR_ANY is used. Set this on multi-homed hosts to fix join failures.)"                          << "\n";
+      ss << R"(    multicast_interface: )"                          << quoteString(config_.transport_layer.udp.multicast_interface)  << "\n";
       ss << R"(    # Windows specific setting to enable receiving UDP traffic with the Npcap based receiver)"                       << "\n";
       ss << R"(    npcap_enabled: )"                                 << config_.transport_layer.udp.npcap_enabled                   << "\n";
       ss << R"()"                                                                                                                   << "\n";

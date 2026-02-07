@@ -26,6 +26,7 @@
 
 #include <ecal/types/custom_data_types.h>
 #include <ecal/os.h>
+#include <string>
 
 namespace eCAL
 {
@@ -62,6 +63,9 @@ namespace eCAL
         bool                    join_all_interfaces { false };   /*!< Linux specific setting to enable joining multicast groups on all network interfacs
                                                                          independent of their link state. Enabling this makes sure that eCAL processes
                                                                          receive data if they are started before network devices are up and running. (Default: false)*/
+        std::string             multicast_interface {};          /*!< Specific network interface address (e.g. "10.0.0.1") to use for multicast group joins.
+                                                                         When empty, INADDR_ANY (0.0.0.0) is used, which may fail on systems with multiple
+                                                                         network interfaces. Set this to resolve "Unable to join multicast group" errors. (Default: "") */
         bool                    npcap_enabled       { false };   //!< Enable to receive UDP traffic with the Npcap based receiver (Default: false)
       
         MulticastConfiguration  network             { "239.0.0.1", 3U };      //!< default: "239.0.0.1", 3U

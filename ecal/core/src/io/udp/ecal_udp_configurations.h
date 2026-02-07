@@ -61,6 +61,16 @@ namespace eCAL
     bool IsUdpMulticastJoinAllIfEnabled();
 
     /**
+     * @brief GetMulticastInterface retrieves the specific network interface address for multicast joins.
+     *
+     * When non-empty, this address is passed to setsockopt(IP_ADD_MEMBERSHIP) to select
+     * a specific NIC instead of INADDR_ANY. Fixes multicast join failures on multi-homed hosts.
+     *
+     * @return The interface address string (e.g. "10.0.0.1"), or empty for INADDR_ANY.
+     */
+    std::string GetMulticastInterface();
+
+    /**
      * @brief GetRegistrationAddress retrieves the UDP registration address based on network configuration.
      *
      * If the network mode is disabled, it returns the local broadcast address.

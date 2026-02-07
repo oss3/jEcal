@@ -64,6 +64,7 @@ namespace eCAL
     ECAL_API int                      GetUdpMulticastRcvBufSizeBytes       ();
 
     ECAL_API bool                     IsUdpMulticastJoinAllIfEnabled       ();
+    ECAL_API const std::string&       GetUdpMulticastInterface             ();
 
     ECAL_API bool                     IsUdpMulticastRecEnabled             ();
     ECAL_API bool                     IsShmRecEnabled                      ();

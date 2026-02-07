@@ -189,6 +189,10 @@ namespace eCAL
       const int port = Config::GetUdpMulticastPort();
       sstream << "Multicast ports          : " << port << " - " << port + 10 << '\n';
       sstream << "Multicast join all IFs   : " << (Config::IsUdpMulticastJoinAllIfEnabled() ? "on" : "off") << '\n';
+      {
+        const auto& mc_iface = Config::GetUdpMulticastInterface();
+        sstream << "Multicast interface      : " << (mc_iface.empty() ? "(any)" : mc_iface) << '\n';
+      }
       sstream << '\n';
 
 #if ECAL_CORE_TIMEPLUGIN

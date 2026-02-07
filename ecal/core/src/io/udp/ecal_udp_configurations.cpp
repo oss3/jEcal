@@ -71,6 +71,11 @@ namespace eCAL
       return Config::IsUdpMulticastJoinAllIfEnabled();
     }
 
+    std::string GetMulticastInterface()
+    {
+      return Config::GetUdpMulticastInterface();
+    }
+
     /**
      * @brief GetLocalBroadcastAddress retrieves the broadcast address within the loopback range.
      *

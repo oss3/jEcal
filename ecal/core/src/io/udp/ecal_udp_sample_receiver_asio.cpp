@@ -98,7 +98,17 @@ namespace eCAL
 #endif
         {
           asio::error_code ec;
-          m_socket->set_option(asio::ip::multicast::leave_group(asio::ip::make_address(ipaddr_)), ec); // NOLINT(*-unused-return-value)
+          const std::string multicast_iface = eCAL::UDP::GetMulticastInterface();
+          if (!multicast_iface.empty())
+          {
+            m_socket->set_option(asio::ip::multicast::leave_group(
+              asio::ip::make_address(ipaddr_).to_v4(),
+              asio::ip::make_address(multicast_iface).to_v4()), ec); // NOLINT(*-unused-return-value)
+          }
+          else
+          {
+            m_socket->set_option(asio::ip::multicast::leave_group(asio::ip::make_address(ipaddr_)), ec); // NOLINT(*-unused-return-value)
+          }
           if (ec)
           {
             std::cerr << "CUDPReceiverAsio: Unable to leave multicast group: " << ec.message() << '\n';
@@ -201,7 +211,18 @@ namespace eCAL
 #endif
         {
           asio::error_code ec;
-          m_socket->set_option(asio::ip::multicast::join_group(asio::ip::make_address(ipaddr_)), ec); // NOLINT(*-unused-return-value)
+          const std::string multicast_iface = eCAL::UDP::GetMulticastInterface();
+          if (!multicast_iface.empty())
+          {
+            // Use specific interface to avoid ambiguity on multi-homed hosts
+            m_socket->set_option(asio::ip::multicast::join_group(
+              asio::ip::make_address(ipaddr_).to_v4(),
+              asio::ip::make_address(multicast_iface).to_v4()), ec); // NOLINT(*-unused-return-value)
+          }
+          else
+          {
+            m_socket->set_option(asio::ip::multicast::join_group(asio::ip::make_address(ipaddr_)), ec); // NOLINT(*-unused-return-value)
+          }
           if (ec)
           {
             if (ec == asio::error::address_in_use)
